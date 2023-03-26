@@ -1,0 +1,22 @@
+<div class="form-container-xs shadow rounded p-3 mt-5">
+    <form (ngSubmit)="updateEmail()">
+        <div class="mb-3">
+            <label class="form-label">Email address</label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel">
+        </div>
+        <button *ngIf="email.touched || email.dirty" type="submit" class="btn btn-outline-danger w-100">Update Email</button>
+    </form>
+</div>
+<div class="form-container-xs shadow rounded p-3 mt-5">
+    <form (ngSubmit)="updatePassword()">
+        <div class="mb-3">
+            <label class="form-label">Old Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="form.oldpassword" #oldpass="ngModel">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="form.newpassword" #newpass="ngModel">
+        </div>        
+        <button *ngIf="oldpass.touched || newpass.touched || newpass.dirty || oldpass.dirty" type="submit" class="btn btn-outline-danger w-100">Update Password</button>
+    </form>
+</div>

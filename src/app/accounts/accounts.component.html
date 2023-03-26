@@ -1,0 +1,55 @@
+<div class="container-sm p-3">
+    <div class="lead mt-5">Accounts Management</div>
+    <div class="rounded border bg-white p-3 mt-4">
+        <div class="input-group mb-4" style="width: 300px">
+            <input type="text" class="form-control form-control-sm">
+            <button class="btn btn-outline-secondary btn-sm">Search</button>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let faculty of list">
+                    <th scope="row">{{ faculty.id }}</th>
+                    <td>{{ faculty.email }}</td>
+                    <td>
+                        <span *ngIf="faculty.isActive" class="badge rounded-pill text-bg-success">APPROVED</span>
+                        <button *ngIf="!faculty.isActive" class="btn btn-outline-primary btn-sm"
+                            (click)="onApprove(faculty)">APPROVE</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-danger btn-sm" *ngIf="faculty.isReviewer"
+                            (click)="onUpdateRole(faculty)">Revert Role</button>
+                        <button class="btn btn-outline-success btn-sm" *ngIf="!faculty.isReviewer"
+                            (click)="onUpdateRole(faculty)">Make Reviewer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav class="mt-4">
+            <ul class="pagination">
+                <li class="page-item" *ngIf="filters.page !== 1">
+                    <div class="page-link" (click)="onChangePage(filters.page - 1)">Previous</div>
+                </li>
+                <li class="page-item" *ngIf="filters.page - 1 > 0">
+                    <div class="page-link" (click)="onChangePage(filters.page - 1)">{{filters.page - 1}}</div>
+                </li>
+                <li class="page-item active">
+                    <div class="page-link">{{filters.page}}</div>
+                </li>
+                <li class="page-item" *ngIf="filters.page + 1 <= totalPage">
+                    <div class="page-link" (click)="onChangePage(filters.page + 1)">{{filters.page + 1}}</div>
+                </li>
+                <li class="page-item" *ngIf="filters.page !== totalPage">
+                    <div class="page-link" (click)="onChangePage(filters.page + 1)">Next</div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

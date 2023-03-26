@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+.form-container-xs{
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    background-color: white;
+}
+
+body,
+html {
+    background-color: #f0f2f5;
+}
