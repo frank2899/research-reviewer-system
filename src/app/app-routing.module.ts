@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ResearchComponent } from './research/research.component';
 import { ResearchDetailsComponent } from './research/research-details/research-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
     {
@@ -20,23 +21,28 @@ const routes: Routes = [
     },
     {
         path : 'app',
-        component : DashboardComponent
+        component : DashboardComponent,
+        canActivate : [AuthGuard]
     },
     {
         path : 'app/profile',
-        component : ProfileComponent
+        component : ProfileComponent,
+        canActivate : [AuthGuard]
     },
     {
         path : 'app/accounts',
-        component : AccountsComponent
+        component : AccountsComponent,
+        canActivate : [AuthGuard]
     },
     {
         path : 'app/research-capsules',
-        component : ResearchComponent
+        component : ResearchComponent,
+        canActivate : [AuthGuard]
     },
     {
         path : 'app/research-capsules/view/:id',
-        component : ResearchDetailsComponent
+        component : ResearchDetailsComponent,
+        canActivate : [AuthGuard]
     },
 ];  
 

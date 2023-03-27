@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileTypes } from '../types/auth';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +10,17 @@ import { ProfileTypes } from '../types/auth';
 
 
 
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   form: ProfileTypes = {
-    email : 'test@gmail.com',
-    newpassword : '123',
-    oldpassword : '123'
+    email : '',
+    newpassword : '',
+    oldpassword : ''
+  }
+
+  constructor(private authService : AuthService) {}
+
+  ngOnInit(): void {
+    this.form.email = this.authService.authCredentials.email
   }
 
   updateEmail() : void {

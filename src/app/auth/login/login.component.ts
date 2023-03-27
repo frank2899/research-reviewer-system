@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthFormTypes } from 'src/app/types/auth';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,11 @@ export class LoginComponent {
     password: ''
   }
 
+  constructor(
+    private authService : AuthService
+  ){}
+
   submit() : void {
-    console.log(this.form)
+    this.authService.login(this.form)
   }
 }

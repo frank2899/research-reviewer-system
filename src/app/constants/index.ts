@@ -1,0 +1,1 @@
+export const LocalStorageAuthName : string = 'RCSYSTEM_AUTH'

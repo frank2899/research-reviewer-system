@@ -9,3 +9,10 @@ export interface ProfileTypes {
     newpassword?: string
     oldpassword?: string
 }
+
+export interface AuthCredsTypes {
+    token : string
+    id : string | number
+    email : string
+    role : 'faculty' | 'admin' | ''
+}
