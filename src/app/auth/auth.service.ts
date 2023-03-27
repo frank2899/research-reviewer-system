@@ -40,6 +40,7 @@ export class AuthService {
   register(form: AuthFormTypes): void {
     console.log(form)
     alert("REGISTERED")
+    this.router.navigate(['/login'])
   }
 
   logout(): void {
