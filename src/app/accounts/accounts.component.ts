@@ -1,68 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FilterTypes } from '../types/table';
 import { FacultyTypes } from '../types/faculty';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.css']
 })
-export class AccountsComponent {
+export class AccountsComponent implements OnInit {
   filters: FilterTypes = {
     page: 1,
     search: '',
   }
-  isLoading : boolean = false
-  totalPage: number = 5
-  list: FacultyTypes[] = [
-    {
-      id: 1,
-      email: 'test@gmail.com',
-      isReviewer: false,
-      isActive: false,
-      role: 'admin'
-    },
-    {
-      id: 2,
-      email: 'dummy@gmail.com',
-      isReviewer: true,
-      isActive: false,
-      role: 'faculty'
-    },
-    {
-      id: 3,
-      email: 'johnDoe@gmail.com',
-      isReviewer: false,
-      isActive: true,
-      role: 'faculty'
-    },
-  ]
+  isLoading: boolean = false
+  totalPage: number = 1
+  list: FacultyTypes[] = []
 
-  onChangePage(page : number) : void {
-    if(this.isLoading) return
+  async ngOnInit(): Promise<void> {
+    this.loadData()
+  }
 
+  async loadData(page: number = 1, search: string = ''): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/users/paginate.php?page=${page}&q=${search}`, {
+      method: 'GET'
+    })
+    const res = await f.json()
+
+    if (res?.status) {
+      this.totalPage = Number(res.totalPages) === 0 ? 1 : Number(res.totalPages)
+      this.filters.page = Number(page)
+      this.list = res.results.map((e: any) => {
+        return {
+          ...e,
+          isReviewer: !!e.isReviewer,
+          isActive: !!e.isActive,
+        }
+      })
+    }
+  }
+
+  async onSearch(): Promise<void> {
+    if (this.isLoading) return
     this.isLoading = true
-    this.filters.page = page
+    await this.loadData(1, this.filters.search)
     this.isLoading = false
   }
 
-  onApprove(faculty : FacultyTypes) : void {
-    this.list = this.list.map( (e) => {
-      if(e.id === faculty.id){
-        return { ...e, isActive : !e.isActive}
-      }
+  async onChangePage(page: number): Promise<void> {
+    if (this.isLoading) return
 
-      return e
-    })
+    this.isLoading = true
+    await this.loadData(page, this.filters.search)
+    this.isLoading = false
   }
 
-  onUpdateRole(faculty : FacultyTypes) : void {
-    this.list = this.list.map( (e) => {
-      if(e.id === faculty.id){
-        return { ...e, isReviewer : !e.isReviewer}
-      }
-
-      return e
+  async onApprove(faculty: FacultyTypes): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/users/update-status.php`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: faculty.id
+      })
     })
+
+    const res = await f.json()
+    if (!res?.status) alert(res?.message || "Something went wrong.")
+    else this.loadData(this.filters.page, this.filters.search)
+  }
+
+  async onUpdateRole(faculty: FacultyTypes): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/users/update-faculty-role.php`, {
+      method: 'POST',
+      body: JSON.stringify({
+        id: faculty.id
+      })
+    })
+
+    const res = await f.json()
+    if (!res?.status) alert(res?.message || "Something went wrong.")
+    else this.loadData(this.filters.page, this.filters.search)
   }
 }

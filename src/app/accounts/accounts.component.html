@@ -1,9 +1,9 @@
 <div class="container-sm p-3">
-    <div class="lead mt-5">Accounts Management</div>
+    <div class="lead">Accounts Management</div>
     <div class="rounded border bg-white p-3 mt-4">
         <div class="input-group mb-4" style="width: 300px">
-            <input type="text" class="form-control form-control-sm">
-            <button class="btn btn-outline-secondary btn-sm">Search</button>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.search">
+            <button class="btn btn-outline-secondary btn-sm" (click)="onSearch()">Search</button>
         </div>
         <table class="table table-bordered table-hover">
             <thead>

@@ -11,7 +11,7 @@ export interface ProfileTypes {
 }
 
 export interface AuthCredsTypes {
-    token : string
+    token ?: string
     id : string | number
     email : string
     role : 'faculty' | 'admin' | ''
