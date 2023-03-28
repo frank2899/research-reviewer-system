@@ -10,6 +10,7 @@ import { LocalStorageAuthName } from "./constants";
 export class AppComponent implements OnInit {
 
     isPageLoading: boolean = false
+    sidebarToggle: boolean = false
 
     constructor(
         private router: Router,

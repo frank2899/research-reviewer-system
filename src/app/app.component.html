@@ -1,38 +1,52 @@
-<div class="container-fluid" style="height: 100vh;">
-  <div class="row" style="height: 100vh;">
-    <nav *ngIf="hasAuth()" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse shadow">
-      <div class="position-sticky pt-3">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item py-3">
-            <h3 class="text-primary">R.C. System</h3>
-          </li>
-          <li class="list-group-item py-3">
-            <a routerLink="/app" class="text-decoration-none">Dashboard</a>
-          </li>
-          <li class="list-group-item py-3">
-            <a routerLink="/app/research-capsules" class="text-decoration-none">Research Capsules</a>
-          </li>
-          <!-- <li class="list-group-item py-3"> -->
-          <li class="list-group-item py-3" *ngIf="AuthRole() === 'admin'">
-            <a routerLink="/app/accounts" class="text-decoration-none">Accounts Management</a>
-          </li>
-          <li class="list-group-item py-3">
-            <a routerLink="/app/profile" class="text-decoration-none">Profile</a>
-          </li>
-          <li class="list-group-item py-3">
-            <button class="btn btn-outline-danger w-100" (click)="signOut()">Sign out</button>
-          </li>
-        </ul>
-      </div>
-    </nav>
+<section [ngClass]="{'toggle-sidebar' : sidebarToggle}">
+  <header id="header" class="header fixed-top d-flex align-items-center" *ngIf="hasAuth()">
+    <div class="d-flex align-items-center justify-content-between">
+      <span class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">R.C SYSTEM</span>
+      </span>
+      <i class="bi bi-list toggle-sidebar-btn" (click)="sidebarToggle = !sidebarToggle"></i>
+    </div>
+  </header>
 
-    <main [ngClass]="{'col-md-9 ms-sm-auto col-lg-10 px-md-4' : hasAuth()}">
-      <div *ngIf="isPageLoading" class="position-sticky top-0 w-100 d-flex justify-content-center align-items-center bg-light" style="height:100vh; z-index: 100;">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+  <aside id="sidebar" class="sidebar" *ngIf="hasAuth()">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link collapsed" routerLink="/app">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" routerLink="/app/research-capsules">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>Research Capsules</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" routerLink="/app/accounts">
+          <i class="bi bi-person"></i>
+          <span>Accounts Management</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" routerLink="/app/profile">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-outline-danger w-100" (click)="signOut()">Sign out</button>
+      </li>
+    </ul>
+  </aside>
+
+  <main [id]="hasAuth() ? 'main' : ''" [ngClass]="{'main' : hasAuth()}">
+    <div class="position-sticky top-0 w-100 d-flex justify-content-center align-items-center bg-light"
+      style="height:80vh; z-index: 100;" *ngIf="isPageLoading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-</div>
+    </div>
+    <router-outlet></router-outlet>
+  </main>
+</section>
