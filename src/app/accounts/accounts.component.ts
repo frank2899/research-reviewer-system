@@ -19,19 +19,22 @@ export class AccountsComponent {
       id: 1,
       email: 'test@gmail.com',
       isReviewer: false,
-      isActive: false
+      isActive: false,
+      role: 'admin'
     },
     {
       id: 2,
       email: 'dummy@gmail.com',
       isReviewer: true,
-      isActive: false
+      isActive: false,
+      role: 'faculty'
     },
     {
       id: 3,
       email: 'johnDoe@gmail.com',
       isReviewer: false,
-      isActive: true
+      isActive: true,
+      role: 'faculty'
     },
   ]
 

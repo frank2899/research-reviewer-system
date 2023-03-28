@@ -3,4 +3,5 @@ export interface FacultyTypes {
     isReviewer : boolean
     email : string
     isActive : boolean
+    role : 'faculty' | 'admin'
 }

@@ -12,6 +12,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Status</th>
                     <th scope="col">Role</th>
+                    <th scope="col">-</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,9 +24,10 @@
                         <button *ngIf="!faculty.isActive" class="btn btn-outline-primary btn-sm"
                             (click)="onApprove(faculty)">APPROVE</button>
                     </td>
+                    <td>{{ faculty.role.toUpperCase() }}</td>
                     <td>
                         <button class="btn btn-outline-danger btn-sm" *ngIf="faculty.isReviewer"
-                            (click)="onUpdateRole(faculty)">Revert Role</button>
+                            (click)="onUpdateRole(faculty)">Revert Reviewer</button>
                         <button class="btn btn-outline-success btn-sm" *ngIf="!faculty.isReviewer"
                             (click)="onUpdateRole(faculty)">Make Reviewer</button>
                     </td>
