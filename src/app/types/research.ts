@@ -8,7 +8,7 @@ export interface ResearchTypes {
     id : number | string
     title : string
     uploadedBy : string
-    reviewers : string
+    reviewers : string[]
     attachment : any
     status : 'unassigned' | 'under revision' | 'completed'
 }

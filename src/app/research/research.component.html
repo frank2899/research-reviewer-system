@@ -3,8 +3,8 @@
     <div class="rounded border bg-white p-3 mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="input-group" style="width: 300px">
-                <input type="text" class="form-control form-control-sm">
-                <button class="btn btn-outline-secondary btn-sm">Search</button>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.search">
+                <button class="btn btn-outline-secondary btn-sm" (click)="onSearch()">Search</button>
             </div>
 
             <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal"
@@ -32,7 +32,7 @@
                         <a href="#" target="_blank" class="btn btn-outline-success btn-sm">Download</a>
                     </td>
                     <td><small>{{ r.uploadedBy }}</small></td>
-                    <td><small>{{ r.reviewers.split(',').join(',') }}</small></td>
+                    <td><small>{{ r.reviewers.join(',') || '' }}</small></td>
                     <td>
                         <span *ngIf="r.status === 'completed'"
                             class="badge rounded-pill text-bg-success">COMPLETED</span>
@@ -75,22 +75,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" >New Research Capsule</h1>
+                <h1 class="modal-title fs-5">New Research Capsule</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Title</label>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" [(ngModel)]="title">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Attachment</label>
-                    <input class="form-control" type="file" >
+                    <input class="form-control" type="file" (change)="onFileSelected($event)">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" (click)="newResearch()">Save</button>
             </div>
         </div>
     </div>

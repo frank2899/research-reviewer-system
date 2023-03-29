@@ -11,7 +11,7 @@ export class ResearchDetailsComponent {
     id : 1,
     title : 'Test Research Capsule',
     uploadedBy : 'Frank Bueno',
-    reviewers : 'Frank, Codrops, Angel',
+    reviewers : ['Frank', 'Codrops', 'Angel'],
     attachment : '',
     status : 'unassigned'
   }
