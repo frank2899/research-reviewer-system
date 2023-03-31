@@ -11,25 +11,37 @@
   <aside id="sidebar" class="sidebar" *ngIf="hasAuth()">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" routerLink="/app">
+        <a [ngClass]="{
+          'nav-link collapsed' : true,
+          'active' : currentRoute === '/app'
+        }" routerLink="/app">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" routerLink="/app/research-capsules">
+        <a [ngClass]="{
+          'nav-link collapsed' : true,
+          'active' : currentRoute === '/app/research-capsules'
+        }" routerLink="/app/research-capsules">
           <i class="bi bi-menu-button-wide"></i>
           <span>Research Capsules</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" routerLink="/app/accounts">
+      <li class="nav-item" *ngIf="AuthRole() === 'admin'">
+        <a [ngClass]="{
+          'nav-link collapsed' : true,
+          'active' : currentRoute === '/app/accounts'
+        }" routerLink="/app/accounts">
           <i class="bi bi-person"></i>
           <span>Accounts Management</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" routerLink="/app/profile">
+        <a [ngClass]="{
+          'nav-link collapsed' : true,
+          'active' : currentRoute === '/app/profile'
+        }" routerLink="/app/profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -47,6 +59,8 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <router-outlet></router-outlet>
+    <div [@routerAnim]="prepareRoute(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
   </main>
 </section>

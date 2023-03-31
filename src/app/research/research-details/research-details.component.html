@@ -1,12 +1,30 @@
 <div class="container-sm p-3">
-    <div class="lead mb-4">Title : {{ research.title }}</div>
-
-    <div class="p-3 rounded bg-white mb-4">
-        <a href="#" target="_blank" class="btn btn-outline-primary">View Attachment</a>
+    <div class="lead">Title : {{ research.title }}</div>
+    <div class="mb-4">
+        <small>Uploaded By : {{ research.uploadedBy }} </small> -
+        <i><small>{{ research.dateCreated }}</small></i>
+    </div>
+    <div class="p-3 rounded bg-white mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#" target="_blank" class="btn btn-outline-primary">View Attachment</a>
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#assign-reviewers-modal" *ngIf="isAdmin">Assign Reviewers</button>
+        </div>
         <div class="mt-3">
             <label for="formFile" class="form-label">Reupload Attachment</label>
             <input class="form-control" type="file">
         </div>
+    </div>
+
+    <div class="mb-4">
+        <small *ngIf="research.reviewers.length !== 0">Reviewers : &nbsp;</small>
+        <ng-container *ngIf="research.reviewers.length !== 0">
+            <ng-container *ngFor="let r of research.reviewers">
+                <span class="badge text-bg-primary">{{ r }}</span> &nbsp;
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="research.reviewers.length === 0">
+            <span class="badge text-bg-danger">No reviewers has been set</span> &nbsp;
+        </ng-container>
     </div>
 
     <div class="p-3 rounded shadow bg-white">
@@ -14,19 +32,52 @@
             <label for="exampleFormControlTextarea1" class="form-label">Add Comment</label>
             <textarea class="form-control" rows="5" [(ngModel)]="newComment"></textarea>
         </div>
-        <button class="w-100 btn btn-outline-success" (click)="addComment()">Save</button>
+        <button class="w-100 btn btn-outline-success" *ngIf="newComment.trimStart() !== ''" (click)="addComment()">Save</button>
     </div>
 
-    <small class="mt-4 d-block">Comments</small>
+    <small class="mt-4 d-block" *ngIf="comments.length !== 0">Comments</small>
     <div class="mt-3">
+        <div class="d-flex justify-content-center mb-3" *ngIf="isLoadingComment">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
         <ng-container *ngFor="let c of comments">
             <div class="bg-white p-3 rounded mb-3">
-                <i class="d-block mb-3"><small>Reviewer : {{ c.email }} </small></i>
-                <p>{{ c.comment }}</p>
                 <i class="d-block">
-                    <small>{{ c.date }}</small>
+                    <small style="font-size:.7rem">{{ c.date }}</small>
                 </i>
+                <i class="d-block mb-2"><small style="font-size:.85rem">{{ c.email }} commented :</small></i>
+                <p>{{ c.comment }}</p>
             </div>
         </ng-container>
+    </div>
+</div>
+
+
+<!-- MODAL ASSIGNING -->
+<div class="modal fade" id="assign-reviewers-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Assign Reviewers</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="reviewers.length === 0">
+                    <p class="p-5 my-3 text-center">No Reviewers Found</p>
+                </ng-container>
+                <ng-container *ngFor="let ar of reviewers">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" [id]="'assignee-reviewer-'+ar.id" [value]="ar.id" (change)="onSelect($event)" [checked]="isChecked(ar.id)">
+                        <label class="form-check-label" >{{ar.email}}</label>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" *ngIf="selectedReviewers.length !== 0" (click)="assignReviewer()">Save</button>
+            </div>
+        </div>
     </div>
 </div>

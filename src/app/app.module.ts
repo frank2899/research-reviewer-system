@@ -9,10 +9,11 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { ResearchComponent } from './research/research.component';
 import { ResearchDetailsComponent } from './research/research-details/research-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
     declarations : [AppComponent, ProfileComponent, AccountsComponent, ResearchComponent, ResearchDetailsComponent, DashboardComponent],
-    imports : [BrowserModule, AppRoutingModule, AuthModule, FormsModule],
+    imports : [BrowserModule, AppRoutingModule, AuthModule, FormsModule, BrowserAnimationsModule],
     bootstrap : [AppComponent]
 })
 

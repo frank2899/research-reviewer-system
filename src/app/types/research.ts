@@ -19,3 +19,11 @@ export interface CommentTypes {
     date : string | Date
     email : string
 }
+
+
+export interface IDetailedResearchTypes extends ResearchTypes {
+    uploadedById : number | string
+    reviewersId : string[]
+    dateCreated : string
+}
+  

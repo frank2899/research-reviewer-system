@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { LocalStorageAuthName } from '../constants';
@@ -8,7 +8,10 @@ import { LocalStorageAuthName } from '../constants';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService : AuthService){}
+  constructor(
+    private authService : AuthService,
+    private router : Router 
+  ){}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -16,7 +19,7 @@ export class AuthGuard implements CanActivate {
     
     if(localStorage.getItem(LocalStorageAuthName)) return true
 
-    return this.authService.isAuthenticated;
+    return this.router.navigateByUrl('/login')
   }
   
 }

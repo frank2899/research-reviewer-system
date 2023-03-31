@@ -4,7 +4,6 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AccountsComponent } from './accounts/accounts.component';
-import { AppComponent } from './app.component';
 import { ResearchComponent } from './research/research.component';
 import { ResearchDetailsComponent } from './research/research-details/research-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';

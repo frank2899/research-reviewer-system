@@ -710,6 +710,11 @@
     color: #4154f1;
     background: #f6f9ff;
   }
+
+  .sidebar-nav .nav-link.active{
+    color: #4154f1;
+    background: #f6f9ff;
+  }
   
   .sidebar-nav .nav-link:hover i {
     color: #4154f1;

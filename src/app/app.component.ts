@@ -1,16 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { Event, NavigationEnd, NavigationStart, Router } from "@angular/router";
+import { Event, NavigationEnd, NavigationStart, Router, RouterOutlet } from "@angular/router";
 import { AuthService } from "./auth/auth.service";
 import { LocalStorageAuthName } from "./constants";
+import { routeAnimate } from "./animation";
 
 @Component({
     selector: 'app-root',
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.html',
+    animations: [routeAnimate]
 })
 export class AppComponent implements OnInit {
 
     isPageLoading: boolean = false
     sidebarToggle: boolean = false
+    currentRoute: string = ''
 
     constructor(
         private router: Router,
@@ -23,6 +26,7 @@ export class AppComponent implements OnInit {
 
             if (routerEvent instanceof NavigationEnd) {
                 this.isPageLoading = false
+                this.currentRoute = routerEvent.url;
             }
         })
     }
@@ -32,6 +36,12 @@ export class AppComponent implements OnInit {
             this.authService.isAuthenticated = true
             this.authService.authCredentials = JSON.parse(localStorage.getItem(LocalStorageAuthName) as string)
         }
+    }
+
+    prepareRoute(outlet: RouterOutlet) {
+        if(outlet.isActivated) return outlet.activatedRoute.snapshot.url
+
+        return outlet
     }
 
     hasAuth(): boolean {

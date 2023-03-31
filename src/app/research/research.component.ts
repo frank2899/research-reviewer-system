@@ -16,7 +16,7 @@ export class ResearchComponent implements OnInit {
     search: '',
   }
   isLoading: boolean = false
-  totalPage: number = 5
+  totalPage: number = 1
   list: ResearchTypes[] = []
 
   uploadedFile: any = null
@@ -31,7 +31,7 @@ export class ResearchComponent implements OnInit {
   }
 
   async loadData(page: number = 1, search: string = ''): Promise<void> {
-    const f = await fetch(`${environment.API_HOST}/api/research/paginate.php?page=${page}&q=${search}`, {
+    const f = await fetch(`${environment.API_HOST}/api/research/paginate.php?page=${page}&q=${search}&role=${this.authService.authCredentials.role}&id=${this.authService.authCredentials.id}`, {
       method: 'GET'
     })
     const res = await f.json()
@@ -40,7 +40,7 @@ export class ResearchComponent implements OnInit {
       this.totalPage = Number(res.totalPages) === 0 ? 1 : Number(res.totalPages)
       this.filters.page = Number(page)
       this.list = res.results.map((e: any) => {
-        return { ...e, reviewers: e.reviewers || [] }
+        return { ...e, reviewers: e?.reviewers || [] }
       })
     }
   }
@@ -61,7 +61,7 @@ export class ResearchComponent implements OnInit {
       })
     })
     const res = await f.json()
-
+    console.log(res)
     if (res?.status) {
       this.loadData(this.filters.page, this.filters.search)
       this.uploadedFile = null
