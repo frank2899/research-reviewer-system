@@ -13,7 +13,33 @@ export class ThemeService {
 
   AppTitle: string = 'R.C SYSTEM'
 
+  vision: string = ''
+  mission: string = ''
+  goals: string = ''
+  objectives: string = ''
+  appLogo: any = null
+
   constructor() { }
+
+  setVision(vision: string) : void {
+    this.vision = vision
+  }
+
+  setMision(mission: string) : void {
+    this.mission = mission
+  }
+
+  setGoals(goals: string) : void {
+    this.goals = goals
+  }
+
+  setObjectives(objectives: string) : void {
+    this.objectives = objectives
+  }
+
+  setAppLogo(appLogo: any) : void {
+    this.appLogo = appLogo
+  }
 
   setBodyBackgroundColor(color: string) : void {
     this.BodyBackgroundColor = color

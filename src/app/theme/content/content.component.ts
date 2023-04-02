@@ -18,6 +18,12 @@ export class ContentComponent implements OnInit {
   PrimaryColor: string = '' //more on background of the content
   AppTitle: string = ''
 
+  vision: string = ''
+  mission: string = ''
+  goals: string = ''
+  objectives: string = ''
+  appLogo: any = null
+
   constructor(
     private themeService: ThemeService,
     private toaster: ToastrService
@@ -30,18 +36,65 @@ export class ContentComponent implements OnInit {
     this.TitleColor = this.themeService.TitleColor
     this.PrimaryColor = this.themeService.PrimaryColor
     this.AppTitle = this.themeService.AppTitle
+    
+    this.vision = this.themeService.vision
+    this.goals = this.themeService.goals
+    this.mission = this.themeService.mission
+    this.objectives = this.themeService.objectives
+    this.appLogo = this.themeService.appLogo
   }
 
   async update(queryName: string, target: string): Promise<void> {
-    const f = await fetch(`${environment.API_HOST}/api/content/update.php?${queryName}=${target}`, {
-      method: 'GET'
+    const form : any = new FormData()
+    form.append(queryName.toString(), target)
+
+    const f = await fetch(`${environment.API_HOST}/api/content/update.php`, {
+      method: 'POST',
+      body : form
     })
     const res = await f.json()
     if (!res?.status) this.toaster.error(res?.message || "Something went wrong.")
+    this.toaster.success("System Content/Theme Updated!")
   }
 
   getHeaderColor(): string {
     return this.themeService.HeaderColor
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event?.target?.files[0] || null;
+
+    if (file) this.appLogo = file;
+  }
+
+  async setVision(): Promise<void> {
+    await this.update('vision', this.vision)
+
+    this.themeService.setVision(this.vision)
+  }
+
+  async setMision(): Promise<void> {
+    await this.update('mission', this.mission)
+
+    this.themeService.setMision(this.mission)
+  }
+
+  async setGoals(): Promise<void> {
+    await this.update('goals', this.goals)
+
+    this.themeService.setGoals(this.goals)
+  }
+
+  async setObjectives(): Promise<void> {
+    await this.update('objectives', this.objectives)
+
+    this.themeService.setObjectives(this.objectives)
+  }
+
+  async setAppLogo(): Promise<void> {
+    await this.update('appLogo', this.appLogo)
+
+    this.themeService.setAppLogo(this.appLogo)
   }
 
   async setBodyBackgroundColor(): Promise<void> {

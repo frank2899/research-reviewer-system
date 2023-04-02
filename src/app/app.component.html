@@ -1,10 +1,11 @@
 <section *ngIf="isThemeLoaded" [ngClass]="{'toggle-sidebar' : sidebarToggle}" [ngStyle]="{ 'background-color' : getPrimaryColor() }">
   <header id="header" class="header fixed-top d-flex align-items-center" *ngIf="hasAuth()" [ngStyle]="{ 'background-color' : getPrimaryColor() }">
     <div class="d-flex align-items-center justify-content-between">
+      <img [src]="getAppLogo()" width="40px" class="d-block me-2"/>
       <span class="logo d-flex align-items-center">
         <span class="d-none d-lg-block" [ngStyle]="{ 'color' : getTitleColor() }">{{ getAppTitle() }}</span>
       </span>
-      <i class="bi bi-list toggle-sidebar-btn" [ngStyle]="{ 'color' : getTitleColor() }" (click)="sidebarToggle = !sidebarToggle"></i>
+      <i class="bi bi-list toggle-sidebar-btn p-0" [ngStyle]="{ 'color' : getTitleColor() }" (click)="sidebarToggle = !sidebarToggle"></i>
     </div>
   </header>
 

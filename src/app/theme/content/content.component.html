@@ -17,7 +17,7 @@
         </nav>
     </div>
 
-    <div class="mt-4 py-3 d-flex">
+    <div class="mt-4 mb-3 py-3 d-flex">
         <div class="row" style="gap:1rem;">
             <div class="col-lg border rounded p-3">
                 <div class="d-flex flex-column justify-content-between" style="height: 100%;">
@@ -26,6 +26,15 @@
                         <input type="text" class="form-control mt-2" [(ngModel)]="AppTitle" />
                     </span>
                     <button class="btn btn-sm btn-primary mt-3" (click)="setAppTitle()">Save</button>
+                </div>
+            </div>
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>App Logo</small>
+                        <input type="file" class="form-control mt-2" (change)="onFileSelected($event)" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setAppLogo()">Save</button>
                 </div>
             </div>
             <div class="col-lg border rounded p-3">
@@ -68,6 +77,46 @@
                     <button class="btn btn-sm btn-primary mt-3" (click)="setHeaderColor()">Save</button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="py-3 mt-3 border-top">
+        <div class="d-flex flex-column" style="grid:1rem">
+            <span>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">CICT MISSION</p>
+                        <textarea class="form-control" rows="10" [(ngModel)]="mission"></textarea>
+                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setMision()">Save</button>
+                    </div>
+                </div>
+            </span>
+            <span>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">CICT VISION</p>
+                        <textarea class="form-control" rows="10" [(ngModel)]="vision"></textarea>
+                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setVision()">Save</button>
+                    </div>
+                </div>
+            </span>
+            <span>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">CICT GOALS</p>
+                        <textarea class="form-control" rows="10" [(ngModel)]="goals"></textarea>
+                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setGoals()">Save</button>
+                    </div>
+                </div>
+            </span>
+            <span>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">CICT OBJECTIVES</p>
+                        <textarea class="form-control" rows="10" [(ngModel)]="objectives"></textarea>
+                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setObjectives()">Save</button>
+                    </div>
+                </div>
+            </span>
         </div>
     </div>
 </div>

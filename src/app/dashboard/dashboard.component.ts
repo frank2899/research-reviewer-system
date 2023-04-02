@@ -71,6 +71,22 @@ export class DashboardComponent implements OnInit {
     return this.themeService.HeaderColor
   }
 
+  getMission(): string {
+    return this.themeService.mission.replaceAll('\n', '<br/>')
+  }
+
+  getVision(): string {
+    return this.themeService.vision.replaceAll('\n', '<br/>')
+  }
+
+  getObjectives(): string {
+    return this.themeService.objectives.replaceAll('\n', '<br/>')
+  }
+
+  getGoals(): string {
+    return this.themeService.goals
+  }
+
   async loadResearchStatusCounts(): Promise<void> {
     this.showCards = false
     const f = await fetch(`${environment.API_HOST}/api/dashboard/research-status.php`, {

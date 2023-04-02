@@ -69,6 +69,10 @@ export class AppComponent implements OnInit {
         return this.themeService.AppTitle
     }
 
+    getAppLogo(): string {
+        return `${environment.API_HOST}/api/assets/${this.themeService.appLogo}`
+    }
+
     async loadContentTheme(): Promise<void> {
         this.isThemeLoaded = false
         const f = await fetch(`${environment.API_HOST}/api/content/get.php`, {
@@ -82,6 +86,12 @@ export class AppComponent implements OnInit {
             this.themeService.setTitleColor(res.result.titleColor)
             this.themeService.setPrimaryColor(res.result.primaryColor)
             this.themeService.setAppTitle(res.result.appTitle)
+
+            this.themeService.setVision(res.result.vision)
+            this.themeService.setGoals(res.result.goals)
+            this.themeService.setMision(res.result.mission)
+            this.themeService.setObjectives(res.result.objectives)
+            this.themeService.setAppLogo(res.result.appLogo)
         }
 
         setTimeout(() => this.isThemeLoaded = true, 1500)
