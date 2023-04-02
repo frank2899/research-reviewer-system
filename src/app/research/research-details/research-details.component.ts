@@ -30,6 +30,7 @@ export class ResearchDetailsComponent implements OnInit {
   }
 
   comments: CommentTypes[] = []
+  imageUrl: string = environment.API_HOST+'/api/assets/'
 
   newComment: string = ''
   routeParamId: string = ''
