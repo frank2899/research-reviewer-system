@@ -26,4 +26,9 @@ export interface IDetailedResearchTypes extends ResearchTypes {
     reviewersId : string[]
     dateCreated : string
 }
-  
+
+export interface SubmittedGrades {
+    userId : string
+    grade : string
+    email : string
+}

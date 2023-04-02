@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FilterTypes } from '../types/table';
 import { ResearchTypes } from '../types/research';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
+import { ThemeService } from '../theme/theme.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-research',
@@ -10,6 +12,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./research.component.css']
 })
 export class ResearchComponent implements OnInit {
+  @ViewChild('closeResearchModalBtn') closeResearchModalBtn: any;
 
   filters: FilterTypes = {
     page: 1,
@@ -23,7 +26,9 @@ export class ResearchComponent implements OnInit {
   title: string = ''
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private themeService: ThemeService,
+    private toaster: ToastrService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -35,7 +40,6 @@ export class ResearchComponent implements OnInit {
       method: 'GET'
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
       this.totalPage = Number(res.totalPages) === 0 ? 1 : Number(res.totalPages)
       this.filters.page = Number(page)
@@ -43,6 +47,10 @@ export class ResearchComponent implements OnInit {
         return { ...e, reviewers: e?.reviewers || [] }
       })
     }
+  }
+
+  getHeaderColor(): string {
+    return this.themeService.HeaderColor
   }
 
   onFileSelected(event: any): void {
@@ -61,13 +69,13 @@ export class ResearchComponent implements OnInit {
       })
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
       this.loadData(this.filters.page, this.filters.search)
       this.uploadedFile = null
       this.title = ''
+      this.closeResearchModalBtn.nativeElement.click()
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 
   async onSearch(): Promise<void> {

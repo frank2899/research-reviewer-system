@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FilterTypes } from '../types/table';
 import { FacultyTypes } from '../types/faculty';
 import { environment } from 'src/environments/environment';
+import { ThemeService } from '../theme/theme.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-accounts',
@@ -17,8 +19,14 @@ export class AccountsComponent implements OnInit {
   totalPage: number = 1
   list: FacultyTypes[] = []
 
+  constructor(private themeService: ThemeService, private toaster: ToastrService) { }
+
   async ngOnInit(): Promise<void> {
     this.loadData()
+  }
+
+  getHeaderColor(): string {
+    return this.themeService.HeaderColor
   }
 
   async loadData(page: number = 1, search: string = ''): Promise<void> {
@@ -64,7 +72,7 @@ export class AccountsComponent implements OnInit {
     })
 
     const res = await f.json()
-    if (!res?.status) alert(res?.message || "Something went wrong.")
+    if (!res?.status) this.toaster.error(res?.message || "Something went wrong.")
     else this.loadData(this.filters.page, this.filters.search)
   }
 
@@ -77,7 +85,7 @@ export class AccountsComponent implements OnInit {
     })
 
     const res = await f.json()
-    if (!res?.status) alert(res?.message || "Something went wrong.")
+    if (!res?.status) this.toaster.error(res?.message || "Something went wrong.")
     else this.loadData(this.filters.page, this.filters.search)
   }
 }

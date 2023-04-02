@@ -1,5 +1,37 @@
 <div class="container-sm p-3">
-    <div class="lead">Title : {{ research.title }}</div>
+    <div class="pagetitle">
+        <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">Research Capsule Details</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/app">
+                        <i class="bi bi-house-door"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a routerLink="/app/research-capsules">
+                        Research Capsules
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a [routerLink]="'/app/research-capsules/view/'+routeParamId">
+                        Details
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="alert alert-warning" role="alert" *ngIf="gradeGiven">
+        <small>You gave <strong class="text-decoration-underline">{{gradeGiven}}</strong> grade on this Research
+            Capsule.</small>
+    </div>
+    <div class="d-flex align-items-center">
+        <div class="lead me-3">Title : {{ research.title }}</div>
+        <span *ngIf="research.status === 'completed'" class="badge rounded-pill text-bg-success">COMPLETED</span>
+        <span *ngIf="research.status === 'under revision'" class="badge rounded-pill text-bg-warning">UNDER
+            REVISION</span>
+        <span *ngIf="research.status === 'unassigned'" class="badge rounded-pill text-bg-secondary">UNASSIGNED</span>
+    </div>
     <div class="mb-4">
         <small>Uploaded By : {{ research.uploadedBy }} </small> -
         <i><small>{{ research.dateCreated }}</small></i>
@@ -7,9 +39,16 @@
     <div class="p-3 rounded bg-white mb-3">
         <div class="d-flex justify-content-between align-items-center">
             <a href="#" target="_blank" class="btn btn-outline-primary">View Attachment</a>
-            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#assign-reviewers-modal" *ngIf="isAdmin">Assign Reviewers</button>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#assign-reviewers-modal"
+                    *ngIf="isAdmin">Assign Reviewers</button>
+                <button class="btn btn-success ms-2" data-bs-toggle="modal" data-bs-target="#give-grade-modal"
+                    *ngIf="isReviewer">Submit Grade</button>
+                <button class="btn btn-warning ms-2" data-bs-toggle="modal" data-bs-target="#all-grade-modal"
+                    *ngIf="isAdmin">View Grades</button>
+            </div>
         </div>
-        <div class="mt-3">
+        <div class="mt-3" *ngIf="isUploader">
             <label for="formFile" class="form-label">Reupload Attachment</label>
             <input class="form-control" type="file">
         </div>
@@ -32,7 +71,8 @@
             <label for="exampleFormControlTextarea1" class="form-label">Add Comment</label>
             <textarea class="form-control" rows="5" [(ngModel)]="newComment"></textarea>
         </div>
-        <button class="w-100 btn btn-outline-success" *ngIf="newComment.trimStart() !== ''" (click)="addComment()">Save</button>
+        <button class="w-100 btn btn-outline-success" *ngIf="newComment.trimStart() !== ''"
+            (click)="addComment()">Save</button>
     </div>
 
     <small class="mt-4 d-block" *ngIf="comments.length !== 0">Comments</small>
@@ -61,7 +101,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Assign Reviewers</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" #closeReviewersModalBtn data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ng-container *ngIf="reviewers.length === 0">
@@ -69,14 +110,79 @@
                 </ng-container>
                 <ng-container *ngFor="let ar of reviewers">
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" [id]="'assignee-reviewer-'+ar.id" [value]="ar.id" (change)="onSelect($event)" [checked]="isChecked(ar.id)">
-                        <label class="form-check-label" >{{ar.email}}</label>
+                        <input class="form-check-input" type="checkbox" [id]="'assignee-reviewer-'+ar.id"
+                            [value]="ar.id" (change)="onSelect($event)" [checked]="isChecked(ar.id)">
+                        <label class="form-check-label">{{ar.email}}</label>
                     </div>
                 </ng-container>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" *ngIf="selectedReviewers.length !== 0" (click)="assignReviewer()">Save</button>
+                <button type="button" class="btn btn-primary" *ngIf="selectedReviewers.length !== 0"
+                    (click)="assignReviewer()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL GIVING GRADE -->
+<div class="modal fade" id="give-grade-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Submit Grade</h1>
+                <button type="button" class="btn-close" #closeGradingModalBtn data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="gradeGiven">
+                    <small>Note : You already submitted Grades for this research. If you wish to update the grade you
+                        submitted just hit save.</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <input type="number" class="form-control" [(ngModel)]="gradeInput" min="0" max="100">
+                <i class="text-secondary" style="font-size: .7rem;">1-100</i>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" *ngIf="(gradeInput > 0) && (gradeInput <= 100)"
+                    (click)="updateGrade()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL GIVING GRADE -->
+<div class="modal fade" id="all-grade-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">All Grades</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="py-5" *ngIf="allSubmittedGrades.length === 0">
+                    <h3 class="mb-2 text-center fw-bolder">No Grades Found</h3>
+                    <p class="text-secondary text-center">Please wait for the reviewers to submit their grades.</p>
+                </div>
+                <table class="table table-bordered" *ngIf="allSubmittedGrades.length !== 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Reviewer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ag of allSubmittedGrades">
+                            <th scope="row">{{ ag.grade }}</th>
+                            <td>{{ ag.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" *ngIf="research.status !== 'completed'" (click)="markAsCompleted()">Mark as Complete</button>
             </div>
         </div>
     </div>

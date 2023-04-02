@@ -1,0 +1,69 @@
+<div class="container-sm p-3">
+    <div class="pagetitle">
+        <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">System Reports</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/app">
+                        <i class="bi bi-house-door"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a routerLink="/app/reports">
+                        Reports
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="mt-4 p-3 border bg-white rounded mb-3 d-flex">
+        <select class="form-select" (change)="onChangeFacultySelect($event)">
+            <option selected value="">All Faculty</option>
+            <option [value]="f.id" *ngFor="let f of faculty">{{ f.email }}</option>
+        </select>
+    </div>
+
+    <div class="p-3 border bg-white rounded mb-3 d-flex" style="gap: 1rem;">
+        <span style="flex :1">
+            <small class="d-block">From : </small>
+            <input class="form-control" type="date" [(ngModel)]="from" (change)="onChangeDate()"/>
+        </span>
+        <span style="flex :1">
+            <small class="d-block">To : </small>
+            <input class="form-control" type="date" [(ngModel)]="to" (change)="onChangeDate()"/>
+        </span>
+    </div>
+
+    <div class="d-flex align-items-center">
+        <button printSectionId="print-section" ngxPrint [useExistingCss]="true" class="btn btn-warning">
+            <i class="bi bi-printer"></i>
+            Print
+        </button>
+    </div>
+    <div class="rounded border bg-white p-3 mt-3" id="print-section">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Uploaded By</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="result.length === 0">
+                    <td colspan="5"><p class="text-center">No results found</p></td>
+                </tr>
+                <tr *ngFor="let r of result;let i = index">
+                    <th scope="row"><small>{{ i + 1}}</small></th>
+                    <td><small>{{ r.title }}</small></td>
+                    <td><small>{{ r.uploadedByEmail}}</small></td>
+                    <td><small>{{ r.status.toUpperCase() }}</small></td>
+                    <td><small>{{ r.dateCreated }}</small></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

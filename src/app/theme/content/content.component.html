@@ -1,0 +1,73 @@
+<div class="container-sm p-3">
+    <div class="pagetitle">
+        <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">Content Management</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/app">
+                        <i class="bi bi-house-door"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a routerLink="/app/content-management">
+                        Content Management
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="mt-4 py-3 d-flex">
+        <div class="row" style="gap:1rem;">
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>App Title</small>
+                        <input type="text" class="form-control mt-2" [(ngModel)]="AppTitle" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setAppTitle()">Save</button>
+                </div>
+            </div>
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>App Title Color</small>
+                        <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
+                        <input type="color" class="form-control form-control-color" [(ngModel)]="TitleColor" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setTitleColor()">Save</button>
+                </div>
+            </div>
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>Body BG Color</small>
+                        <i style="font-size: .7rem;" class="d-block">Recommended : #f6f9ff</i>
+                        <input type="color" class="form-control form-control-color" [(ngModel)]="BodyBackgroundColor" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setBodyBackgroundColor()">Save</button>
+                </div>
+            </div>
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>Primary Color</small>
+                        <i style="font-size: .7rem;" class="d-block">Recommended : #ffffff</i>
+                        <input type="color" class="form-control form-control-color" [(ngModel)]="PrimaryColor" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setPrimaryColor()">Save</button>
+                </div>
+            </div>
+            <div class="col-lg border rounded p-3">
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <span>
+                        <small>Header Color</small>
+                        <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
+                        <input type="color" class="form-control form-control-color" [(ngModel)]="HeaderColor" />
+                    </span>
+                    <button class="btn btn-sm btn-primary mt-3" (click)="setHeaderColor()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

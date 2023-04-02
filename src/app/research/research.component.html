@@ -1,5 +1,21 @@
 <div class="container-sm p-3">
-    <div class="lead">Research Capsules Management</div>
+    <div class="pagetitle">
+        <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">Research Capsules Management</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/app">
+                        <i class="bi bi-house-door"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a routerLink="/app/research-capsules">
+                        Research Capsules
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
     <div class="rounded border bg-white p-3 mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="input-group" style="width: 300px">
@@ -76,7 +92,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">New Research Capsule</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" #closeResearchModalBtn data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">

@@ -8,8 +8,19 @@ import { ResearchComponent } from './research/research.component';
 import { ResearchDetailsComponent } from './research/research-details/research-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ReportsComponent } from './reports/reports.component';
+import { ContentComponent } from './theme/content/content.component';
 
 const routes: Routes = [
+    // {
+    //     path : '',
+    //     component : HomeComponent
+    // },
+    {
+        path: '',
+        redirectTo: '/app',
+        pathMatch: 'full'
+    },
     {
         path : 'login',
         component : LoginComponent
@@ -43,6 +54,16 @@ const routes: Routes = [
         component : ResearchDetailsComponent,
         canActivate : [AuthGuard]
     },
+    {
+        path : 'app/reports',
+        component : ReportsComponent,
+        canActivate : [AuthGuard]
+    },
+    {
+        path : 'app/content-management',
+        component : ContentComponent,
+        canActivate : [AuthGuard]
+    }
 ];  
 
 @NgModule({

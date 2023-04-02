@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ThemeService } from 'src/app/theme/theme.service';
 import { FacultyTypes } from 'src/app/types/faculty';
-import { CommentTypes, IDetailedResearchTypes } from 'src/app/types/research';
+import { CommentTypes, IDetailedResearchTypes, SubmittedGrades } from 'src/app/types/research';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,6 +14,9 @@ import { environment } from 'src/environments/environment';
 })
 
 export class ResearchDetailsComponent implements OnInit {
+  @ViewChild('closeReviewersModalBtn') closeReviewersModalBtn: any;
+  @ViewChild('closeGradingModalBtn') closeGradingModalBtn: any;
+
   research: IDetailedResearchTypes = {
     id: '',
     title: '',
@@ -31,18 +36,34 @@ export class ResearchDetailsComponent implements OnInit {
   isLoadingComment: boolean = true
   reviewers: FacultyTypes[] = []
   selectedReviewers: string[] = []
-  isAdmin = this.authService.authCredentials.role === 'admin'
+  isAdmin: boolean = this.authService.authCredentials.role === 'admin'
+  isReviewer: boolean = false
+  isUploader: boolean = false
+  gradeGiven: number = 0 // grade that YOU given
+  gradeInput: number = 0
+  allSubmittedGrades: SubmittedGrades[] = []
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private themeService: ThemeService,
+    private toaster: ToastrService
   ) { }
 
   async ngOnInit(): Promise<void> {
     this.routeParamId = this.activatedRoute.snapshot.paramMap.get('id') || ''
+
     await this.loadData()
     await this.loadComments()
-    await this.loadReviewers()
+    if (this.authService.authCredentials.role === 'admin') {
+      await this.loadReviewers()
+      await this.loadAllSubmittedGrades()
+    }
+    if (this.isReviewer) await this.loadGivenGrade()
+  }
+
+  getHeaderColor(): string {
+    return this.themeService.HeaderColor
   }
 
   async loadData(): Promise<void> {
@@ -50,7 +71,6 @@ export class ResearchDetailsComponent implements OnInit {
       method: 'GET'
     })
     const res = await f.json()
-
     if (res?.status) {
       this.selectedReviewers = [...new Set(res.reviewers?.split(',') || [])] as string[]
       this.research = {
@@ -65,6 +85,9 @@ export class ResearchDetailsComponent implements OnInit {
         dateCreated: res?.dateCreated ? new Date(res.dateCreated).toDateString() : ''
       }
     }
+
+    this.isReviewer = this.research.reviewersId.indexOf(this.authService.authCredentials.id.toString()) !== -1
+    this.isUploader = this.authService.authCredentials.id.toString() === this.research.uploadedById.toString()
   }
 
   onSelect(e: any): void {
@@ -79,6 +102,18 @@ export class ResearchDetailsComponent implements OnInit {
     else return true
   }
 
+  async markAsCompleted(): Promise<void>{
+    const f = await fetch(`${environment.API_HOST}/api/research/complete.php?researchId=${this.routeParamId}`, {
+      method: 'GET'
+    })
+    const res = await f.json()
+    if (res?.status) {
+      this.toaster.success("Marked as Completed")
+      this.loadData()
+    }
+    else this.toaster.error(res?.message || "Something went wrong.")
+  }
+
   async assignReviewer(): Promise<void> {
     const f = await fetch(`${environment.API_HOST}/api/research/update-reviewers.php`, {
       method: 'POST',
@@ -88,12 +123,48 @@ export class ResearchDetailsComponent implements OnInit {
       })
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
-      alert("Reviewers Updated!")
+      this.toaster.success("Reviewers Updated!")
+      this.closeReviewersModalBtn.nativeElement.click()
       this.loadData()
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
+  }
+
+  async loadGivenGrade(): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/grades/gave.php?researchId=${this.routeParamId}&userId=${this.authService.authCredentials.id}`, {
+      method: 'GET'
+    })
+    const res = await f.json()
+    if (res?.status) this.gradeGiven = Number(res.grade)
+  }
+
+  async updateGrade(): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/grades/add.php`, {
+      method: 'POST',
+      body: JSON.stringify({
+        researchId: this.routeParamId,
+        userId: this.authService.authCredentials.id,
+        grade: this.gradeInput
+      })
+    })
+    const res = await f.json()
+    if (res?.status) {
+      this.gradeInput = 0
+      this.closeGradingModalBtn.nativeElement.click()
+      await this.loadGivenGrade()
+    }
+    else this.toaster.error(res?.message || "Something went wrong.")
+  }
+
+  async loadAllSubmittedGrades(): Promise<void> {
+    const f = await fetch(`${environment.API_HOST}/api/grades/all-submitted-grades.php?researchId=${this.routeParamId}`, {
+      method: 'GET'
+    })
+    const res = await f.json()
+    if (res?.status) this.allSubmittedGrades = res.results.map((e: any) => {
+      return { userId : e.userId, grade : e.grade, email : e.email}
+    })
   }
 
   async addComment(): Promise<void> {
@@ -108,12 +179,11 @@ export class ResearchDetailsComponent implements OnInit {
       })
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
       this.newComment = ''
       setTimeout(() => this.loadComments(), 1000)
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 
   async loadComments(): Promise<void> {
@@ -121,7 +191,6 @@ export class ResearchDetailsComponent implements OnInit {
       method: 'GET'
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
       this.comments = res?.data.map((e: any) => {
         return {
@@ -140,7 +209,6 @@ export class ResearchDetailsComponent implements OnInit {
       method: 'GET'
     })
     const res = await f.json()
-    console.log(res)
     if (res?.status) {
       this.reviewers = res.reviewers.map((e: any) => {
         return {

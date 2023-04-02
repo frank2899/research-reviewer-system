@@ -3,6 +3,7 @@ import { AuthCredsTypes, AuthFormTypes } from '../types/auth';
 import { LocalStorageAuthName } from '../constants';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
     role: ''
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private toaster: ToastrService) { }
 
   async login(form: AuthFormTypes): Promise<void> {
     const f = await fetch(`${environment.API_HOST}/api/users/login.php`, {
@@ -45,7 +46,7 @@ export class AuthService {
 
       this.router.navigate(['/app'])
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 
   async register(form: AuthFormTypes): Promise<void> {
@@ -60,10 +61,10 @@ export class AuthService {
 
     const res = await f.json()
     if (res?.status) {
-      alert("REGISTERED")
+      this.toaster.success('Registered! Waiting for approval. ')
       this.router.navigate(['/login'])
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 
   logout(): void {

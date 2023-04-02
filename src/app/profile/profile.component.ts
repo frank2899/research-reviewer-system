@@ -3,6 +3,8 @@ import { ProfileTypes } from '../types/auth';
 import { AuthService } from '../auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { LocalStorageAuthName } from '../constants';
+import { ThemeService } from '../theme/theme.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -19,10 +21,18 @@ export class ProfileComponent implements OnInit {
     oldpassword: ''
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private themeService: ThemeService,
+    private toaster: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.form.email = this.authService.authCredentials.email
+  }
+
+  getHeaderColor(): string {
+    return this.themeService.HeaderColor
   }
 
   async updateEmail(): Promise<void> {
@@ -36,7 +46,7 @@ export class ProfileComponent implements OnInit {
 
     const res = await f.json()
     if (res?.status) {
-      alert("Email updated!")
+      this.toaster.success("Email updated!")
       this.authService.authCredentials.email = res.email
 
       localStorage.setItem(
@@ -44,7 +54,7 @@ export class ProfileComponent implements OnInit {
         JSON.stringify(this.authService.authCredentials)
       )
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 
   async updatePassword(): Promise<void> {
@@ -59,10 +69,10 @@ export class ProfileComponent implements OnInit {
 
     const res = await f.json()
     if (res?.status) {
-      alert("Password updated!")
+      this.toaster.success("Password updated!")
       this.form.newpassword = ''
       this.form.oldpassword = ''
     }
-    else alert(res?.message || "Something went wrong.")
+    else this.toaster.error(res?.message || "Something went wrong.")
   }
 }

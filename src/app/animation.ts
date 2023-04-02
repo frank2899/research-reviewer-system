@@ -13,12 +13,12 @@ export const routeAnimate =
                     height: '100%'
                 })
             ]),
-            query(':enter:not(.login-page):not(.register-page)', [style({ top: '-100%', opacity: 0 })]),
-            query(':leave:not(.login-page):not(.register-page)', animateChild()),
+            query(':enter', [style({ top: '-100%', opacity: 0 })]),
+            query(':leave', animateChild()),
             group([
-                query(':leave:not(.login-page):not(.register-page)', [animate('500ms ease-out', style({ top: '100%', opacity: 0 }))]),
+                query(':leave', [animate('500ms ease-out', style({ top: '100%', opacity: 0 }))]),
                 query(':enter', [animate('500ms ease-out', style({ top: '0%', opacity: 1 }))])
             ]),
-            query(':enter:not(.login-page):not(.register-page)', animateChild())
+            query(':enter', animateChild())
         ])
     ])

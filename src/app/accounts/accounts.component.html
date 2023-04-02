@@ -1,5 +1,21 @@
 <div class="container-sm p-3">
-    <div class="lead">Accounts Management</div>
+    <div class="pagetitle">
+        <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">Faculty Accounts Management</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/app">
+                        <i class="bi bi-house-door"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a routerLink="/app/accounts">
+                        Accounts Management
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
     <div class="rounded border bg-white p-3 mt-4">
         <div class="input-group mb-4" style="width: 300px">
             <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.search">
