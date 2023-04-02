@@ -30,7 +30,9 @@ export class ResearchDetailsComponent implements OnInit {
   }
 
   comments: CommentTypes[] = []
-  imageUrl: string = environment.API_HOST+'/api/assets/'
+  imageUrl: string = environment.API_HOST + '/api/assets/'
+  uploadedFile: any = null
+  isReUploading: boolean = false
 
   newComment: string = ''
   routeParamId: string = ''
@@ -91,6 +93,31 @@ export class ResearchDetailsComponent implements OnInit {
     this.isUploader = this.authService.authCredentials.id.toString() === this.research.uploadedById.toString()
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event?.target?.files[0] || null;
+
+    if (file) this.uploadedFile = file;
+  }
+
+  async reupload(): Promise<void> {
+    this.isReUploading = true
+    const formData = new FormData();
+    formData.append('attachment', this.uploadedFile);
+    formData.append('research_id', this.routeParamId);
+
+    const f = await fetch(`${environment.API_HOST}/api/research/reupload.php`, {
+      method: 'POST', body: formData
+    })
+    const res = await f.json()
+    if (res?.status) {
+      this.loadData()
+      this.uploadedFile = null
+      this.toaster.success("Attachment Updated!")
+    }
+    else this.toaster.error(res?.message || "Something went wrong.")
+    this.isReUploading = false
+  }
+
   onSelect(e: any): void {
     const isChecked = e?.target.checked
 
@@ -103,7 +130,7 @@ export class ResearchDetailsComponent implements OnInit {
     else return true
   }
 
-  async markAsCompleted(): Promise<void>{
+  async markAsCompleted(): Promise<void> {
     const f = await fetch(`${environment.API_HOST}/api/research/complete.php?researchId=${this.routeParamId}`, {
       method: 'GET'
     })
@@ -164,7 +191,7 @@ export class ResearchDetailsComponent implements OnInit {
     })
     const res = await f.json()
     if (res?.status) this.allSubmittedGrades = res.results.map((e: any) => {
-      return { userId : e.userId, grade : e.grade, email : e.email}
+      return { userId: e.userId, grade: e.grade, email: e.email }
     })
   }
 
