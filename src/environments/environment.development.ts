@@ -1,3 +1,3 @@
 export const environment = {
-    API_HOST : 'http://localhost/research-capsule-backend'
+    API_HOST : 'https://research-capsule.000webhostapp.com/'
 };

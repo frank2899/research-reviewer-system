@@ -41,11 +41,16 @@
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="list.length === 0">
+                    <td colspan="7">
+                        <p class="fw-bold text-center">No data found</p>
+                    </td>
+                </tr>
                 <tr *ngFor="let r of list">
                     <th scope="row"><small>{{ r.id }}</small></th>
                     <td><small>{{ r.title }}</small></td>
                     <td>
-                        <a href="#" target="_blank" class="btn btn-outline-success btn-sm">Download</a>
+                        <a [href]="imageUrl+r.attachment" target="_blank" class="btn btn-outline-success btn-sm">Download</a>
                     </td>
                     <td><small>{{ r.uploadedBy }}</small></td>
                     <td><small>{{ r.reviewers.join(', ') || '' }}</small></td>

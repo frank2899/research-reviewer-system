@@ -24,6 +24,7 @@ export class ResearchComponent implements OnInit {
 
   uploadedFile: any = null
   title: string = ''
+  imageUrl: string = environment.API_HOST+'/api/assets/'
 
   constructor(
     private authService: AuthService,
@@ -60,20 +61,22 @@ export class ResearchComponent implements OnInit {
   }
 
   async newResearch(): Promise<void> {
+    const formData = new FormData();
+    formData.append('title', this.title);
+    formData.append('attachment', this.uploadedFile);
+    formData.append('id', this.authService.authCredentials.id.toString());
+
     const f = await fetch(`${environment.API_HOST}/api/research/save.php`, {
-      method: 'POST',
-      body: JSON.stringify({
-        title: this.title,
-        attachment: this.uploadedFile,
-        id: this.authService.authCredentials.id
-      })
+      method: 'POST', body: formData
     })
     const res = await f.json()
+
     if (res?.status) {
       this.loadData(this.filters.page, this.filters.search)
       this.uploadedFile = null
       this.title = ''
       this.closeResearchModalBtn.nativeElement.click()
+      this.toaster.success("New Research capsule added.")
     }
     else this.toaster.error(res?.message || "Something went wrong.")
   }
