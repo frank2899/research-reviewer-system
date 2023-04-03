@@ -64,7 +64,7 @@ export class ReportsComponent implements OnInit {
     const res = await f.json()
     if (res?.status) {
       this.result = res.result.map((e: any) => {
-        return { ...e, dateCreated: new Date(e.dateCreated).toDateString() }
+        return { ...e, dateCreated: `${new Date(e.dateCreated).toDateString()} ${new Date(e.dateCreated).toLocaleTimeString()}` }
       })
     }
   }

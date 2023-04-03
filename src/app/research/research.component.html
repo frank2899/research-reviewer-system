@@ -50,7 +50,7 @@
                     <th scope="row"><small>{{ r.id }}</small></th>
                     <td><small>{{ r.title }}</small></td>
                     <td>
-                        <a [href]="imageUrl+r.attachment" target="_blank" class="btn btn-outline-success btn-sm">Download</a>
+                        <a [href]="imageUrl+r.attachment" target="_blank" class="btn btn-outline-success btn-sm w-100">View</a>
                     </td>
                     <td><small>{{ r.uploadedBy }}</small></td>
                     <td><small>{{ r.reviewers.join(', ') || '' }}</small></td>

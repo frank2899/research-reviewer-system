@@ -85,7 +85,7 @@ export class ResearchDetailsComponent implements OnInit {
         attachment: res.attachment,
         uploadedById: res.uploadedBy,
         reviewers: res?.reviewersEmail?.filter((x: string | null) => x),
-        dateCreated: res?.dateCreated ? new Date(res.dateCreated).toDateString() : ''
+        dateCreated: res?.dateCreated ? `${new Date(res.dateCreated).toDateString()} ${new Date(res.dateCreated).toLocaleTimeString()}` : ''
       }
     }
 
@@ -224,7 +224,7 @@ export class ResearchDetailsComponent implements OnInit {
         return {
           id: e.id,
           comment: e.comment,
-          date: e.dateCreated ? new Date(e.dateCreated).toDateString() : '-',
+          date: e.dateCreated ? `${new Date(e.dateCreated).toDateString()} ${new Date(e.dateCreated).toLocaleTimeString()}` : '-',
           email: e.email
         }
       })

@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getGoals(): string {
-    return this.themeService.goals
+    return this.themeService.goals.replaceAll('\n', '<br/>')
   }
 
   async loadResearchStatusCounts(): Promise<void> {

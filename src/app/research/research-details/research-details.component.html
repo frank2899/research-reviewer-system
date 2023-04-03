@@ -50,7 +50,7 @@
         </div>
         <div class="mt-3" *ngIf="isUploader">
             <p class="text-secondary text-center" *ngIf="isReUploading">Reuploading attachment...</p>
-            <div class="input-group mb-3" *ngIf="!isReUploading">
+            <div class="input-group" *ngIf="!isReUploading">
                 <label class="input-group-text" for="re-upload">Re-Upload Attachment</label>
                 <input type="file" class="form-control" id="re-upload" (change)="onFileSelected($event)">
                 <button class="btn btn-primary" (click)="reupload()">Submit</button>
@@ -92,7 +92,7 @@
                     <small style="font-size:.7rem">{{ c.date }}</small>
                 </i>
                 <i class="d-block mb-2"><small style="font-size:.85rem">{{ c.email }} commented :</small></i>
-                <p>{{ c.comment }}</p>
+                <p [innerHTML]="c.comment.replaceAll('\n', '<br/>')"></p>
             </div>
         </ng-container>
     </div>

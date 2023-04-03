@@ -84,7 +84,7 @@
             <span>
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">CICT MISSION</p>
+                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT MISSION</p>
                         <textarea class="form-control" rows="10" [(ngModel)]="mission"></textarea>
                         <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setMision()">Save</button>
                     </div>
@@ -93,7 +93,7 @@
             <span>
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">CICT VISION</p>
+                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT VISION</p>
                         <textarea class="form-control" rows="10" [(ngModel)]="vision"></textarea>
                         <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setVision()">Save</button>
                     </div>
@@ -102,7 +102,7 @@
             <span>
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">CICT GOALS</p>
+                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT GOALS</p>
                         <textarea class="form-control" rows="10" [(ngModel)]="goals"></textarea>
                         <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setGoals()">Save</button>
                     </div>
