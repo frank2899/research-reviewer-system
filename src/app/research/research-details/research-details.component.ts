@@ -195,6 +195,13 @@ export class ResearchDetailsComponent implements OnInit {
     })
   }
 
+  getAverage(): number{
+    const totalExpectedSubmits = this.research.reviewers.length
+    const currentTotalGrades = this.allSubmittedGrades.reduce((accumulator : number, currentValue : any) => accumulator + currentValue.grade, 0)
+
+    return currentTotalGrades / totalExpectedSubmits
+  }
+
   async addComment(): Promise<void> {
     if (this.newComment.trimStart() === '') return
     this.isLoadingComment = true
