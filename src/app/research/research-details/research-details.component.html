@@ -169,7 +169,7 @@
                     <h3 class="mb-2 text-center fw-bolder">No Grades Found</h3>
                     <p class="text-secondary text-center">Please wait for the reviewers to submit their grades.</p>
                 </div>
-                <div class="alert alert-success" role="alert" *ngIf="allSubmittedGrades.length === research.reviewers.length">
+                <div class="alert alert-success" role="alert" *ngIf="allSubmittedGrades.length !== 0 && (allSubmittedGrades.length === research.reviewers.length)">
                     <h4 class="alert-heading">Well done!</h4>
                     <p>Grades are now complete and got an average of {{getAverage()}}%.</p>
                     <hr>
@@ -195,10 +195,10 @@
                     <div class="d-flex justify-content-end w-100" style="gap:10px">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" *ngIf="research.status !== 'completed'" (click)="markAsCompleted()"
-                            [disabled]="allSubmittedGrades.length !== research.reviewers.length"
+                            [disabled]="allSubmittedGrades.length === 0 || allSubmittedGrades.length !== research.reviewers.length"
                         >Mark as Complete</button>
                     </div>
-                    <i class="d-block text-end" *ngIf="allSubmittedGrades.length !== research.reviewers.length"><small class="text-secondary">Need all Reviewers to submit grades.</small></i>
+                    <i class="d-block text-end" *ngIf="allSubmittedGrades.length === 0 || allSubmittedGrades.length !== research.reviewers.length"><small class="text-secondary">Need all Reviewers to submit grades.</small></i>
                 </div>
             </div>
         </div>
