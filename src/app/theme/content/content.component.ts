@@ -23,6 +23,7 @@ export class ContentComponent implements OnInit {
   goals: string = ''
   objectives: string = ''
   appLogo: any = null
+  rubriks: any = null
 
   constructor(
     private themeService: ThemeService,
@@ -61,10 +62,20 @@ export class ContentComponent implements OnInit {
     return this.themeService.HeaderColor
   }
 
+  getRubriks(): string {
+    return this.themeService.rubriks && `${environment.API_HOST}/api/assets/${this.themeService.rubriks}`
+  }
+
   onFileSelected(event: any): void {
     const file: File = event?.target?.files[0] || null;
 
     if (file) this.appLogo = file;
+  }
+
+  onRubrikFileSelected(event: any): void {
+    const file: File = event?.target?.files[0] || null;
+
+    if (file) this.rubriks = file;
   }
 
   async setVision(): Promise<void> {
@@ -95,6 +106,12 @@ export class ContentComponent implements OnInit {
     await this.update('appLogo', this.appLogo)
 
     this.themeService.setAppLogo(this.appLogo)
+  }
+
+  async setRubriks(): Promise<void> {
+    await this.update('rubriks', this.rubriks)
+
+    this.themeService.setRubriks(this.rubriks)
   }
 
   async setBodyBackgroundColor(): Promise<void> {

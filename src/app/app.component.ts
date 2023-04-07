@@ -92,6 +92,7 @@ export class AppComponent implements OnInit {
             this.themeService.setMision(res.result.mission)
             this.themeService.setObjectives(res.result.objectives)
             this.themeService.setAppLogo(res.result.appLogo)
+            this.themeService.setRubriks(res.result.rubriks)
         }
 
         setTimeout(() => this.isThemeLoaded = true, 1500)

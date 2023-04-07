@@ -19,7 +19,13 @@ export class ThemeService {
   objectives: string = ''
   appLogo: any = null
 
+  rubriks: any = null
+
   constructor() { }
+
+  setRubriks(rubriks: any) : void {
+    this.rubriks = rubriks
+  }
 
   setVision(vision: string) : void {
     this.vision = vision

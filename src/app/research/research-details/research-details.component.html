@@ -145,7 +145,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <input type="number" class="form-control" [(ngModel)]="gradeInput" min="0" max="100">
-                <i class="text-secondary" style="font-size: .7rem;">1-100</i>
+                <i class="text-secondary d-block" style="font-size: .7rem;">1-100</i>
+                <hr/>
+                <div class="d-flex justify-content-center">
+                    <a [href]="getRubriks()" class="btn btn-warning mt-2 px-5 btn-sm mx-auto" *ngIf="getRubriks()">View Rubrics</a>
+                    <button class="btn border mt-2 px-5 btn-sm" *ngIf="!getRubriks()" disabled>No Rubrics found</button>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

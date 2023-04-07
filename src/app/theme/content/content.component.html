@@ -80,6 +80,20 @@
         </div>
     </div>
     <div class="py-3 mt-3 border-top">
+        <div class="row">
+            <div class="col-md">
+                <label class="form-label">Update Rubrics</label>
+                <input class="form-control" type="file" (change)="onRubrikFileSelected($event)">
+                <button class="btn btn-sm btn-primary mt-3" *ngIf="rubriks" (click)="setRubriks()">Submit</button>
+            </div>
+            <div class="col-md">
+                <label class="d-block">Current Rubrics</label>
+                <a [href]="getRubriks()" class="btn btn-warning mt-2 px-5" *ngIf="getRubriks()">View</a>
+                <button class="btn border mt-2 px-5" *ngIf="!getRubriks()" disabled>No Rubrics found</button>
+            </div>
+        </div>
+    </div>
+    <div class="py-3 mt-3 border-top">
         <div class="d-flex flex-column" style="grid:1rem">
             <span>
                 <div class="card">
