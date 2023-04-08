@@ -99,7 +99,7 @@
   </aside>
 
   <main [id]="hasAuth() ? 'main' : ''" [ngClass]="{'main' : hasAuth()}"
-    [ngStyle]="{ 'background-color' : getBodyBackgroundColor() }">
+    [ngStyle]="{ 'background-color' : getBodyBackgroundColor() }" (click)="isDropdownHeaderOpen = false">
     <div class="position-sticky top-0 w-100 d-flex justify-content-center align-items-center"
       style="height:80vh; z-index: 100;" *ngIf="isPageLoading">
       <div class="spinner-border text-primary" role="status">
