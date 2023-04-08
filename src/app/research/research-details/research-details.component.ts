@@ -69,6 +69,10 @@ export class ResearchDetailsComponent implements OnInit {
     return this.themeService.HeaderColor
   }
 
+  getRubriks(): string {
+    return this.themeService.rubriks && `${environment.API_HOST}/api/assets/${this.themeService.rubriks}`
+  }
+
   async loadData(): Promise<void> {
     const f = await fetch(`${environment.API_HOST}/api/research/view.php?id=${this.routeParamId}`, {
       method: 'GET'

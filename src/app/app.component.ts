@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     isPageLoading: boolean = false
     sidebarToggle: boolean = false
     currentRoute: string = ''
-
+    isDropdownHeaderOpen: boolean = false
     // themes
     isThemeLoaded: boolean = false
 
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     }
 
     getAppLogo(): string {
-        return `${environment.API_HOST}/api/assets/${this.themeService.appLogo}`
+        return this.themeService.appLogo ? `${environment.API_HOST}/api/assets/${this.themeService.appLogo}` : '../assets/three-stars.png'
     }
 
     async loadContentTheme(): Promise<void> {
@@ -92,6 +92,7 @@ export class AppComponent implements OnInit {
             this.themeService.setMision(res.result.mission)
             this.themeService.setObjectives(res.result.objectives)
             this.themeService.setAppLogo(res.result.appLogo)
+            this.themeService.setRubriks(res.result.rubriks)
         }
 
         setTimeout(() => this.isThemeLoaded = true, 1500)
@@ -109,6 +110,10 @@ export class AppComponent implements OnInit {
 
     AuthRole(): string {
         return this.authService.authCredentials.role
+    }
+
+    AuthEmail(): string {
+        return this.authService.authCredentials.email
     }
 
     signOut(): void {

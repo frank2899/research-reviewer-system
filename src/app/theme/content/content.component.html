@@ -1,5 +1,5 @@
 <div class="container-sm p-3">
-    <div class="pagetitle">
+    <div class="pagetitle mb-4">
         <h1 class="card-title" [ngStyle]="{'color': getHeaderColor()}">Content Management</h1>
         <nav>
             <ol class="breadcrumb">
@@ -16,107 +16,139 @@
             </ol>
         </nav>
     </div>
-
-    <div class="mt-4 mb-3 py-3 d-flex">
-        <div class="row" style="gap:1rem;">
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>App Title</small>
-                        <input type="text" class="form-control mt-2" [(ngModel)]="AppTitle" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setAppTitle()">Save</button>
-                </div>
+    <!-- TABS -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#vmgo" type="button"
+                role="tab">VMGO</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#themes" type="button"
+                role="tab">Themes</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#rubrics" type="button"
+                role="tab">Rubrics</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active pt-3" id="vmgo" role="tabpanel">
+            <div class="d-flex flex-column" style="grid:1rem">
+                <span>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT MISSION</p>
+                            <textarea class="form-control" rows="10" [(ngModel)]="mission"></textarea>
+                            <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setMision()">Save</button>
+                        </div>
+                    </div>
+                </span>
+                <span>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT VISION</p>
+                            <textarea class="form-control" rows="10" [(ngModel)]="vision"></textarea>
+                            <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setVision()">Save</button>
+                        </div>
+                    </div>
+                </span>
+                <span>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT GOALS</p>
+                            <textarea class="form-control" rows="10" [(ngModel)]="goals"></textarea>
+                            <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setGoals()">Save</button>
+                        </div>
+                    </div>
+                </span>
+                <span>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">CICT OBJECTIVES</p>
+                            <textarea class="form-control" rows="10" [(ngModel)]="objectives"></textarea>
+                            <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto"
+                                (click)="setObjectives()">Save</button>
+                        </div>
+                    </div>
+                </span>
             </div>
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>App Logo</small>
-                        <input type="file" class="form-control mt-2" (change)="onFileSelected($event)" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setAppLogo()">Save</button>
+        </div>
+        <div class="tab-pane fade pt-3" id="themes" role="tabpanel">
+            <div class="row" style="gap:1rem;">
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>App Title</small>
+                            <input type="text" class="form-control mt-2" [(ngModel)]="AppTitle" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setAppTitle()">Save</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>App Title Color</small>
-                        <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
-                        <input type="color" class="form-control form-control-color" [(ngModel)]="TitleColor" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setTitleColor()">Save</button>
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>App Logo</small>
+                            <input type="file" class="form-control mt-2" (change)="onFileSelected($event)" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setAppLogo()">Save</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>Body BG Color</small>
-                        <i style="font-size: .7rem;" class="d-block">Recommended : #f6f9ff</i>
-                        <input type="color" class="form-control form-control-color" [(ngModel)]="BodyBackgroundColor" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setBodyBackgroundColor()">Save</button>
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>App Title Color</small>
+                            <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
+                            <input type="color" class="form-control form-control-color" [(ngModel)]="TitleColor" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setTitleColor()">Save</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>Primary Color</small>
-                        <i style="font-size: .7rem;" class="d-block">Recommended : #ffffff</i>
-                        <input type="color" class="form-control form-control-color" [(ngModel)]="PrimaryColor" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setPrimaryColor()">Save</button>
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>Body BG Color</small>
+                            <i style="font-size: .7rem;" class="d-block">Recommended : #f6f9ff</i>
+                            <input type="color" class="form-control form-control-color"
+                                [(ngModel)]="BodyBackgroundColor" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setBodyBackgroundColor()">Save</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg border rounded p-3">
-                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                    <span>
-                        <small>Header Color</small>
-                        <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
-                        <input type="color" class="form-control form-control-color" [(ngModel)]="HeaderColor" />
-                    </span>
-                    <button class="btn btn-sm btn-primary mt-3" (click)="setHeaderColor()">Save</button>
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>Primary Color</small>
+                            <i style="font-size: .7rem;" class="d-block">Recommended : #ffffff</i>
+                            <input type="color" class="form-control form-control-color" [(ngModel)]="PrimaryColor" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setPrimaryColor()">Save</button>
+                    </div>
+                </div>
+                <div class="col-lg border rounded p-3">
+                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                        <span>
+                            <small>Header Color</small>
+                            <i style="font-size: .7rem;" class="d-block">Recommended : #012970</i>
+                            <input type="color" class="form-control form-control-color" [(ngModel)]="HeaderColor" />
+                        </span>
+                        <button class="btn btn-sm btn-primary mt-3" (click)="setHeaderColor()">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="py-3 mt-3 border-top">
-        <div class="d-flex flex-column" style="grid:1rem">
-            <span>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT MISSION</p>
-                        <textarea class="form-control" rows="10" [(ngModel)]="mission"></textarea>
-                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setMision()">Save</button>
-                    </div>
+        <div class="tab-pane fade pt-3" id="rubrics" role="tabpanel">
+            <div class="row">
+                <div class="col-md">
+                    <label class="form-label">Update Rubrics</label>
+                    <input class="form-control" type="file" (change)="onRubrikFileSelected($event)">
+                    <button class="btn btn-sm btn-primary mt-3" *ngIf="rubriks" (click)="setRubriks()">Submit</button>
                 </div>
-            </span>
-            <span>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT VISION</p>
-                        <textarea class="form-control" rows="10" [(ngModel)]="vision"></textarea>
-                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setVision()">Save</button>
-                    </div>
+                <div class="col-md">
+                    <label class="d-block">Current Rubrics</label>
+                    <a [href]="getRubriks()" class="btn btn-warning mt-2 px-5" *ngIf="getRubriks()">View</a>
+                    <button class="btn border mt-2 px-5" *ngIf="!getRubriks()" disabled>No Rubrics found</button>
                 </div>
-            </span>
-            <span>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title" [ngStyle]="{'color': getHeaderColor()}">CICT GOALS</p>
-                        <textarea class="form-control" rows="10" [(ngModel)]="goals"></textarea>
-                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setGoals()">Save</button>
-                    </div>
-                </div>
-            </span>
-            <span>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title">CICT OBJECTIVES</p>
-                        <textarea class="form-control" rows="10" [(ngModel)]="objectives"></textarea>
-                        <button class="btn btn-sm btn-primary mt-2 px-5 mx-auto" (click)="setObjectives()">Save</button>
-                    </div>
-                </div>
-            </span>
+            </div>
         </div>
     </div>
 </div>
