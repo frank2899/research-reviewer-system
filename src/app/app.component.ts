@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     }
 
     getAppLogo(): string {
-        return `${environment.API_HOST}/api/assets/${this.themeService.appLogo}`
+        return this.themeService.appLogo ? `${environment.API_HOST}/api/assets/${this.themeService.appLogo}` : '../assets/three-stars.png'
     }
 
     async loadContentTheme(): Promise<void> {
