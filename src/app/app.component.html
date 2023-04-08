@@ -1,12 +1,51 @@
-<section *ngIf="isThemeLoaded" [ngClass]="{'toggle-sidebar' : sidebarToggle}" [ngStyle]="{ 'background-color' : getPrimaryColor() }">
-  <header id="header" class="header fixed-top d-flex align-items-center" *ngIf="hasAuth()" [ngStyle]="{ 'background-color' : getPrimaryColor() }">
+<section *ngIf="isThemeLoaded" [ngClass]="{'toggle-sidebar' : sidebarToggle}"
+  [ngStyle]="{ 'background-color' : getPrimaryColor() }">
+  <header id="header" class="header fixed-top d-flex align-items-center" *ngIf="hasAuth()"
+    [ngStyle]="{ 'background-color' : getPrimaryColor() }">
     <div class="d-flex align-items-center justify-content-between">
-      <img [src]="getAppLogo()" width="40px" class="d-block me-2"/>
+      <img [src]="getAppLogo()" width="40px" class="d-block me-2" />
       <span class="logo d-flex align-items-center">
         <span class="d-none d-lg-block" [ngStyle]="{ 'color' : getTitleColor() }">{{ getAppTitle() }}</span>
       </span>
-      <i class="bi bi-list toggle-sidebar-btn p-0" [ngStyle]="{ 'color' : getTitleColor() }" (click)="sidebarToggle = !sidebarToggle"></i>
+      <i class="bi bi-list toggle-sidebar-btn p-0" [ngStyle]="{ 'color' : getTitleColor() }"
+        (click)="sidebarToggle = !sidebarToggle"></i>
     </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item dropdown px-3 py-2 border rounded-pill m-3"
+          (click)="isDropdownHeaderOpen = !isDropdownHeaderOpen" style="cursor: pointer;">
+          <div class="nav-link nav-profile d-flex align-items-center">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{AuthEmail()}}</span>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-arrow profile d-block"
+            style="right:0rem;margin-top:2rem" *ngIf="isDropdownHeaderOpen">
+            <li class="dropdown-header">
+              <h6>{{AuthEmail()}}</h6>
+              <small>{{AuthRole().toUpperCase()}}</small>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" routerLink="/app/profile">
+                <i class="bi bi-person"></i>
+                <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <span class="dropdown-item d-flex align-items-center" (click)="signOut()" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <aside id="sidebar" class="sidebar" *ngIf="hasAuth()" [ngStyle]="{ 'background-color' : getPrimaryColor() }">
@@ -47,15 +86,6 @@
           <span>Content Management</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a [ngClass]="{
-          'nav-link collapsed' : true,
-          'active' : currentRoute === '/app/profile'
-        }" routerLink="/app/profile">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li>
       <li class="nav-item" *ngIf="AuthRole() === 'admin'">
         <a [ngClass]="{
           'nav-link collapsed' : true,
@@ -65,13 +95,11 @@
           <span>Reports</span>
         </a>
       </li>
-      <li class="nav-item">
-        <button class="btn btn-outline-danger w-100" (click)="signOut()">Sign out</button>
-      </li>
     </ul>
   </aside>
 
-  <main [id]="hasAuth() ? 'main' : ''" [ngClass]="{'main' : hasAuth()}" [ngStyle]="{ 'background-color' : getBodyBackgroundColor() }">
+  <main [id]="hasAuth() ? 'main' : ''" [ngClass]="{'main' : hasAuth()}"
+    [ngStyle]="{ 'background-color' : getBodyBackgroundColor() }">
     <div class="position-sticky top-0 w-100 d-flex justify-content-center align-items-center"
       style="height:80vh; z-index: 100;" *ngIf="isPageLoading">
       <div class="spinner-border text-primary" role="status">
@@ -83,7 +111,9 @@
     </div>
   </main>
 </section>
-<div *ngIf="!isThemeLoaded" class="bg-white w-100 d-flex justify-content-center align-items-center position-fixed top-0 start-0" style="height: 100%;z-index:500">
+<div *ngIf="!isThemeLoaded"
+  class="bg-white w-100 d-flex justify-content-center align-items-center position-fixed top-0 start-0"
+  style="height: 100%;z-index:500">
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>

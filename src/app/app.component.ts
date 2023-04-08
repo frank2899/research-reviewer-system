@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     isPageLoading: boolean = false
     sidebarToggle: boolean = false
     currentRoute: string = ''
-
+    isDropdownHeaderOpen: boolean = false
     // themes
     isThemeLoaded: boolean = false
 
@@ -110,6 +110,10 @@ export class AppComponent implements OnInit {
 
     AuthRole(): string {
         return this.authService.authCredentials.role
+    }
+
+    AuthEmail(): string {
+        return this.authService.authCredentials.email
     }
 
     signOut(): void {
