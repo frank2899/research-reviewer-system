@@ -3,7 +3,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center" *ngIf="hasAuth()"
     [ngStyle]="{ 'background-color' : getPrimaryColor() }">
     <div class="d-flex align-items-center justify-content-between">
-      <i class="bi bi-list toggle-sidebar-btn p-0 pe-3" [ngStyle]="{ 'color' : getTitleColor() }"
+      <i class="bi bi-list toggle-sidebar-btn p-0 pe-2" [ngStyle]="{ 'color' : getTitleColor() }"
         (click)="sidebarToggle = !sidebarToggle"></i>
       <img [src]="getAppLogo()" width="40px" class="d-block me-2" />
       <span class="logo d-flex align-items-center">
