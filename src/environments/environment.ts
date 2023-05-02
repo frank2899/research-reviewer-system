@@ -1,3 +1,3 @@
 export const environment = {
-    API_HOST : 'http://research-review-cf.preview-domain.com'
+    API_HOST : 'https://research-review-cf.preview-domain.com'
 };
