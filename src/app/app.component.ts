@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
 
     AuthProfile(): string {
         // console.log(this.authService.authCredentials.profile)
-        return this.authService.authCredentials.profile ? `${environment.API_HOST}/api/assets/${this.authService.authCredentials.profile}` : 'https://img.freepik.com/free-icon/user_318-563642.jpg'
+        return this.authService.authCredentials.profile || 'https://img.freepik.com/free-icon/user_318-563642.jpg'
     }
 
     signOut(): void {
