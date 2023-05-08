@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .custom-bg{
         width: 100%;
         height: 100vh;
@@ -6,8 +6,14 @@
         background-size: cover;
         background-position: bottom;
     }
-</style>
-<div class="custom-bg">
+</style> -->
+<div class="custom-bg" [ngStyle]="{
+    'width' : '100%',
+    'height' : '100vh',
+    'background-image': 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(' + (getBGImage() || '../../../assets/pimentel.jpg')+')',
+    'background-size': 'cover',
+    'background-position': 'bottom'
+}">
     <div class="container login-page">
 
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">

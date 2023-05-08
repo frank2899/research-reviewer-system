@@ -21,6 +21,8 @@ export class ThemeService {
 
   rubriks: any = null
 
+  backgroundImage: any
+
   constructor() { }
 
   setRubriks(rubriks: any) : void {
@@ -37,6 +39,10 @@ export class ThemeService {
 
   setGoals(goals: string) : void {
     this.goals = goals
+  }
+
+  setBackgroundImage(bg: string) : void {
+    this.backgroundImage = bg
   }
 
   setObjectives(objectives: string) : void {

@@ -24,6 +24,8 @@ export class ContentComponent implements OnInit {
   objectives: string = ''
   appLogo: any = null
   rubriks: any = null
+  
+  backgroundImage: any
 
   constructor(
     private themeService: ThemeService,
@@ -71,6 +73,12 @@ export class ContentComponent implements OnInit {
 
     if (file) this.appLogo = file;
   }
+  
+  onBGFileSelected(event: any): void {
+    const file: File = event?.target?.files[0] || null;
+
+    if (file) this.backgroundImage = file;
+  }
 
   onRubrikFileSelected(event: any): void {
     const file: File = event?.target?.files[0] || null;
@@ -82,6 +90,12 @@ export class ContentComponent implements OnInit {
     await this.update('vision', this.vision)
 
     this.themeService.setVision(this.vision)
+  }
+
+  async setBGImage(): Promise<void> {
+    await this.update('backgroundImage', this.backgroundImage)
+
+    this.themeService.setBackgroundImage(this.backgroundImage)
   }
 
   async setMision(): Promise<void> {

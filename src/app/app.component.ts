@@ -93,6 +93,7 @@ export class AppComponent implements OnInit {
             this.themeService.setObjectives(res.result.objectives)
             this.themeService.setAppLogo(res.result.appLogo)
             this.themeService.setRubriks(res.result.rubriks)
+            this.themeService.setBackgroundImage(res.result.backgroundImage)
         }
 
         setTimeout(() => this.isThemeLoaded = true, 1500)
@@ -114,6 +115,11 @@ export class AppComponent implements OnInit {
 
     AuthEmail(): string {
         return this.authService.authCredentials.email
+    }
+
+    AuthProfile(): string {
+        // console.log(this.authService.authCredentials.profile)
+        return this.authService.authCredentials.profile ? `${environment.API_HOST}/api/assets/${this.authService.authCredentials.profile}` : 'https://img.freepik.com/free-icon/user_318-563642.jpg'
     }
 
     signOut(): void {

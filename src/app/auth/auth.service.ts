@@ -16,8 +16,15 @@ export class AuthService {
     token: '',
     id: '',
     email: '',
-    role: ''
+    role: '',
+    name: '',
+    profile: '',
+    age: '',
+    address: '',
+    employeeNumber: '',
+    department: 'BSIT',
   }
+  imageUrl: string = environment.API_HOST+'/api/assets/'
 
   constructor(private router: Router, private toaster: ToastrService) { }
 
@@ -36,7 +43,13 @@ export class AuthService {
       this.authCredentials = {
         id: res.id,
         email: res.email,
-        role: res.role
+        role: res.role,
+        name: res.name,
+        profile: res.profile && (this.imageUrl + res.profile),
+        age: res.age,
+        address: res.address,
+        employeeNumber: res.employeeNumber,
+        department: res.department,
       }
 
       localStorage.setItem(
@@ -50,14 +63,22 @@ export class AuthService {
   }
 
   async register(form: AuthFormTypes): Promise<void> {
+    const formData = new FormData();
+    formData.append('email', form.email);
+    formData.append('password', form.password);
+    formData.append('repassword', form.repassword || '');
+    formData.append('name', form.name || '');
+    formData.append('profile', form.profile || '');
+    formData.append('age', form.age || '');
+    formData.append('address', form.address || '');
+    formData.append('employeeNumber', form.employeeNumber || '');
+    formData.append('department', form.department || '');
+    
     const f = await fetch(`${environment.API_HOST}/api/users/register.php`, {
       method: 'POST',
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-        repassword: form.repassword
-      })
-    })
+      body: formData,
+    });
+    
 
     const res = await f.json()
     if (res?.status) {

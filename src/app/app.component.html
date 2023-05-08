@@ -16,6 +16,7 @@
         <li class="nav-item dropdown px-3 py-2 border rounded-pill m-3"
           (click)="isDropdownHeaderOpen = !isDropdownHeaderOpen" style="cursor: pointer;">
           <div class="nav-link nav-profile d-flex align-items-center">
+            <img [src]="AuthProfile()" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{AuthEmail()}}</span>
           </div>
           <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-arrow profile d-block"
