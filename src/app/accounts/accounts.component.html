@@ -36,9 +36,9 @@
                     <th scope="row">{{ faculty.id }}</th>
                     <td>{{ faculty.email }}</td>
                     <td>
-                        <span *ngIf="faculty.isActive" class="badge rounded-pill text-bg-success">APPROVED</span>
+                        <span *ngIf="faculty.isActive" class="badge rounded-pill text-bg-success">Approved</span>
                         <button *ngIf="!faculty.isActive" class="btn btn-outline-primary btn-sm"
-                            (click)="onApprove(faculty)">APPROVE</button>
+                            (click)="onApprove(faculty)">Not Approved</button>
                     </td>
                     <td>{{ faculty.role.toUpperCase() }}</td>
                     <td>
